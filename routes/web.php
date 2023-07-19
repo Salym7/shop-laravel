@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\AdminContreller;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/admin', AdminController::class);
+Route::get('/', App\Http\Controllers\Main\IndexController::class)->name('main.index');
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['prefix'  => 'categories'], function () {
+    Route::get('/', [CategoryController::class, 'index'])->name('category.index');
+    Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
+    Route::post('/', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/{category}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::get('/{category}', [CategoryController::class, 'show'])->name('category.show');
+    Route::patch('/{category}', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete('/{category}', [CategoryController::class, 'delete'])->name('category.delete');
 });
