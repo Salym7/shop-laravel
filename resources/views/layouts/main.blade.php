@@ -10,6 +10,8 @@
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="adminlte/plugins/select2/css/select2.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="adminlte/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
@@ -153,7 +155,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/gallery.html" class="nav-link">
+              <a href="{{route('product.index')}}" class="nav-link">
                 <i class="nav-icon fas fa-tshirt"></i>
                 <p>
                   Products
@@ -232,7 +234,11 @@
   <script src="adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
   <!-- AdminLTE App -->
   <script src="adminlte/dist/js/adminlte.js"></script>
-  <!-- AdminLTE for demo purposes -->
+  <!-- Select2 -->
+  <script src="adminlte/plugins/select2/js/select2.full.min.js"></script>
+  <script>
+    $('.tags , .colors').select2()
+  </script>
 </body>
 
 </html>

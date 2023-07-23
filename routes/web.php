@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', App\Http\Controllers\Main\IndexController::class)->name('main.index');
 
 Route::group(['prefix'  => 'categories'], function () {
@@ -28,6 +31,7 @@ Route::group(['prefix'  => 'categories'], function () {
     Route::patch('/{category}', [CategoryController::class, 'update'])->name('category.update');
     Route::delete('/{category}', [CategoryController::class, 'delete'])->name('category.delete');
 });
+
 Route::group(['prefix'  => 'tags'], function () {
     Route::get('/', [TagController::class, 'index'])->name('tag.index');
     Route::get('/create', [TagController::class, 'create'])->name('tag.create');
@@ -56,4 +60,14 @@ Route::group(['prefix'  => 'users'], function () {
     Route::get('/{user}', [UserController::class, 'show'])->name('user.show');
     Route::patch('/{user}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/{user}', [UserController::class, 'delete'])->name('user.delete');
+});
+
+Route::group(['prefix'  => 'products'], function () {
+    Route::get('/', [ProductController::class, 'index'])->name('product.index');
+    Route::get('/create', [ProductController::class, 'create'])->name('product.create');
+    Route::post('/', [ProductController::class, 'store'])->name('product.store');
+    Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
+    Route::get('/{product}', [ProductController::class, 'show'])->name('product.show');
+    Route::patch('/{product}', [ProductController::class, 'update'])->name('product.update');
+    Route::delete('/{product}', [ProductController::class, 'delete'])->name('product.delete');
 });
