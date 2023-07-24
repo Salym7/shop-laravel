@@ -31,7 +31,10 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        return view('product.edit', compact('product'));
+        $categories = Category::all();
+        $tags = Tag::all();
+        $colors = Color::all();
+        return view('product.edit', compact('product', 'categories', 'tags', 'colors'));
     }
 
     public function index()
@@ -42,8 +45,8 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-
-        return view('product.show', compact('product'));
+        $tags = Tag::all();
+        return view('product.show', compact('product',  'tags'));
     }
 
     public function store(StoreRequest $request)
@@ -78,7 +81,33 @@ class ProductController extends Controller
     public function update(UpdateRequest $request, Product $product)
     {
         $data = $request->validated();
+        if (isset($data['preview_image'])) {
+            $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);
+            if (Storage::disk('public')->exists($product->preview_image)) {
+                Storage::disk('public')->delete($product->preview_image);
+            }
+        } else {
+            $data['preview_image'] = $product->preview_image;
+        }
+        $tagsIds = $data['tags'];
+        $colorsIds = $data['colors'];
+        unset($data['tags'], $data['colors']);
+
         $product->update($data);
+        ProductTag::where('product_id', $product->id)->delete();
+        foreach ($tagsIds as $tagsId) {
+            ProductTag::create([
+                'product_id' => $product->id,
+                'tag_id' => $tagsId,
+            ]);
+        }
+        ColorProduct::where('product_id', $product->id)->delete();
+        foreach ($colorsIds as $colorsId) {
+            ColorProduct::create([
+                'product_id' => $product->id,
+                'color_id' => $colorsId,
+            ]);
+        }
 
         return view('product.show', compact('product'));
     }

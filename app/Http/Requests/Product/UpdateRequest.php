@@ -23,6 +23,15 @@ class UpdateRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
+            'description' => 'required|string',
+            'content' => 'required|string',
+            'preview_image' => 'nullable',
+            'price' => 'required|integer',
+            'count' => 'required|integer',
+            'is_published' => 'nullable|string',
+            'category_id' => 'nullable|string',
+            'tags' => 'nullable|array',
+            'colors' => 'nullable|array',
         ];
     }
 }

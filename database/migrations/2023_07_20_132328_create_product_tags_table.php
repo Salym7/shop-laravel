@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('product_tags', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('tag_id')->nullable()->index()->constrained('tags');
-            $table->foreignId('product_id')->nullable()->index()->constrained('products');
+            $table->unsignedBigInteger('tag_id');
+            $table->unsignedBigInteger('product_id');
+
+            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
             $table->timestamps();
         });

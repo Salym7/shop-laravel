@@ -56,7 +56,6 @@
                                     </td>
                                     <td>count</td>
                                     </td>
-                                    </td>
                                     <td>category</td>
                                     </td>
                                     <td>tags</td>
@@ -71,9 +70,14 @@
                                     <td>{{$product->content}}</td>
                                     <td>{{$product->price}}</td>
                                     <td>{{$product->count}}</td>
-                                    <td>{{$product->category}}</td>
-                                    <td>{{$product->tags}}</td>
-                                    <td>{{$product->colors}}</td>
+                                    <td>{{$product->category->title}}</td>
+                                    <td>@foreach ($product->tags as $tag)
+                                        {{$tag->title . ', '}}
+                                        @endforeach</td>
+                                    <td class="d-flex"> @foreach ($product->colors as $color)
+                                        <div style="width: 16px; height:16px; background:{{'#' . $color->title}}"></div>
+                                        @endforeach
+                                    </td>
                                     </td>
                                 </tr>
                             </tbody>

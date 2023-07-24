@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('color_products', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('color_id')->nullable()->index()->constrained('colors');
-            $table->foreignId('product_id')->nullable()->index()->constrained('products');
+            $table->unsignedBigInteger('color_id');
+            $table->unsignedBigInteger('product_id');
+
+            $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
             $table->timestamps();
         });
